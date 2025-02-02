@@ -103,27 +103,32 @@ void loop() {
     return;
   }
   
-  colour = getColour(); // Returns colour sensed. 0 - black, 1 - red, 2 - green, 3 - blue, 4 - white
   dist = getDist(); //Returns distance (long) to front obstactle in centimeters
 
-  Serial.println("Color: " + String(colour) + ", Distance: " + String(dist));
+  Serial.println("Distance: " + String(dist));
   
   if (dist <= 30){
+    
+    
+
     Serial.println("Close");
+    stopMotors();
+    /*
     delay(forwardDelay);
     stopMotors();
     delay(500);
+    */
     colour = getColour();
     Serial.println(" -- Color: " + String(colour));
 
-    
+    /*
     goForward();
-    while(dist < 10){
-      Serial.println("backtrack: " + String(getDist()));
+    while(dist > 15){
+      Serial.println("advance: " + String(getDist()));
       dist = getDist();
-      delay(10);
+      delay(30);
     }
-    stopMotors();
+    stopMotors();*/
     
 
     
@@ -157,7 +162,7 @@ void loop() {
 }
 
 void clawClose(){
-  for(int i=1; i<=65; i++)
+  for(int i=1; i<=75; i++)
     claw.write(i);
     delay(200);
 }
@@ -170,12 +175,23 @@ void turnLeft(int a){ // Sets motors to turn left. a is angle in degrees
     Serial.println("Turning left " + String(a));
     int d = a * turnConst / 90;
       // Turn on motor A & B, go Left
+
+    
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
     delay(d);
-
+    /*
+    goForward();
+    delay(20);
+    
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    delay(d/2);
+    */
     // Turn off motors
   /*  digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
@@ -195,14 +211,25 @@ void turnRight(int a){ // Sets motors to turn left. a is angle in degrees
     digitalWrite(in2, HIGH);
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    delay(d);
+    delay(100);
 
-    // Turn off motors
-    /*digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
+    goForward();
+    delay(130);
+
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-*/
+    delay(350);
+
+    goForward();
+    delay(100);
+
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+    delay(250);
     goForward();
 }
 
