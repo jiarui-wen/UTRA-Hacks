@@ -91,8 +91,6 @@ void setup() {
 
  //Motor Setup
  // Set all the motor control pins to outputs
- //pinMode(enA, OUTPUT);
- //pinMode(enB, OUTPUT);
  pinMode(in1, OUTPUT);
  pinMode(in2, OUTPUT);
  pinMode(in3, OUTPUT);
@@ -111,8 +109,7 @@ void setup() {
 
 
  claw.attach(6);
- //claw.write(0);
-  delay(3000);
+ delay(1000);
 
 
  //clawClose();
@@ -140,6 +137,9 @@ void loop() {
      }
      else{
        goForward();
+       delay(150);
+       stopMotors();
+       delay(200);
      }
    } 
 
@@ -156,26 +156,27 @@ void loop() {
        goForward();
        delay(100);
        stopMotors();
-       delay(100);
+       delay(200);
      }
      else if(color == prevColor){
        goBackwards();
-       delay(200);
+       delay(450);
        stopMotors();
-       turnLeft(300);
+       turnLeft(400);
 
 
 
 
        goForward();
-       delay(150);
+       delay(200);
+      
        stopMotors();
        delay(100);
      }
      //NEW COLOR
      else{
        goForward();
-       delay(200);
+       delay(150);
        stopMotors();
        delay(200);
        prevColor = currColor;
@@ -185,10 +186,10 @@ void loop() {
 
        if (loopCounter >= 5){
          goBackwards();
-         delay(250);
+         delay(450);
          stopMotors();
          clawOpen();
-         delay(1000);
+         delay(2000);
          while (getColour()!=0 || getColour() !=4){
            goBackwards();
          }
@@ -261,14 +262,7 @@ int getColour(){ // Returns colour sensed. 0 - black, 1 - red, 2 - green, 3 - bl
  delay(150);
 
 
- //The second the car recieves power it takes into account the black surface and notes down the threshold colors.
- //Multiplied by 0.7 and 0.8 because that is roughly the ratio it falls by when a color is detected
- /*if (!callibrated){
-   redThresh = redPW;
-   blueThresh = bluePW;
-   greenThresh = greenPW;
-   callibrated = true;
- }*/
+ //The second the car recieves power it takes into account the black surface and notes down the threshold colors
 
 
  if (redPW < redThresh){
@@ -385,6 +379,8 @@ void turnRight(int a){ // Sets motors to turn left. a is angle in degrees
    digitalWrite(in3, LOW);
    digitalWrite(in4, LOW);
 }
+
+
 
 
 
